@@ -19,7 +19,7 @@ const TurnOn = () => {
   gpio.digitalWrite(LED_1, 1);
   setTimeout(LED_1Off, 200);
   }
-  if (button && count == 0){
+  if (!button && count == 0){
       console.log("touched");
       gpio.digitalWrite(BUZZER, 1);
       setTimeout(BuzzerOff, 100);
@@ -29,14 +29,15 @@ const TurnOn = () => {
       console.log("first touch, all led is turned on");
       lightsensor = 1;
       count++;
+  }
+  else {
       if(lightsensor == 1 && !sensor){
         gpio.digitalWrite(RELAY, gpio.HIGH);
       }
       if(lightsensor == 1 && sensor) {
         gpio.digitalWrite(RELAY, gpio.LOW);
       }
-    }
-    if(button && count == 1) {
+    if(!button && count == 1) {
       gpio.digitalWrite(BUZZER, 1);
       setTimeout(BuzzerOff, 100);
       gpio.digitalWrite(LED_R, 0);
@@ -46,6 +47,7 @@ const TurnOn = () => {
       lightsensor = 0;
       count = 0;
     }
+  }
   setTimeout(TurnOn, 500);
 }
 
@@ -63,10 +65,10 @@ process.on('SIGINT', () => {
   gpio.digitalWrite(LED_G, 0);
   gpio.digitalWrite(BUZZER, 0);
   gpio.digitalWrite(RELAY, gpio.LOW);
-  gpio.digitalWirte(LED_1, 0);
+  gpio.digitalWrite(LED_1, 0);
   console.log("all device is turned off");
   process.exit();
-}
+});
 
 gpio.wiringPiSetup();
 gpio.pinMode(LED_1, gpio.OUTPUT);
