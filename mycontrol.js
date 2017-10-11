@@ -32,10 +32,10 @@ const TurnOn = () => {
   }
   else {
       if(lightsensor == 1 && !sensor){
-        gpio.digitalWrite(RELAY, gpio.HIGH);
+        gpio.digitalWrite(RELAY, gpio.LOW);
       }
       if(lightsensor == 1 && sensor) {
-        gpio.digitalWrite(RELAY, gpio.LOW);
+        gpio.digitalWrite(RELAY, gpio.HIGH);
       }
     if(!button && count == 1) {
       gpio.digitalWrite(BUZZER, 1);
